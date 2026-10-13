@@ -139,4 +139,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const shareButton = document.getElementById("share-event");
+    const shareMessage = document.getElementById("share-message");
+
+    if (shareButton && shareMessage) {
+        shareButton.addEventListener("click", async () => {
+            const eventTitle =
+                document.querySelector(".event-information h1")?.textContent
+                || "Evento no Conecta+";
+
+            const shareData = {
+                title: eventTitle,
+                text: `Confira este evento: ${eventTitle}`,
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                    shareMessage.textContent =
+                        "Compartilhamento iniciado!";
+                } else {
+                    await navigator.clipboard.writeText(shareData.url);
+                    shareMessage.textContent =
+                        "Link do evento copiado!";
+                }
+            } catch (error) {
+                if (error.name !== "AbortError") {
+                    shareMessage.textContent =
+                        "Não foi possível compartilhar o evento.";
+                }
+            }
+        });
+    }
+
 });
