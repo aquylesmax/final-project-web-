@@ -1,43 +1,101 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Elementos dos detalhes do evento
     const eventContent = document.getElementById("event-content");
     const params = new URLSearchParams(window.location.search);
     const eventId = params.get("id");
 
+    // Exibir os detalhes do evento
     if (!eventId) {
-        eventContent.innerHTML = "<p>Nenhum evento foi selecionado.</p>";
-        return;
-    }
-
-    if (!Array.isArray(window.events)) {
+        eventContent.innerHTML =
+            "<p>Nenhum evento foi selecionado.</p>";
+    } else if (!Array.isArray(window.events)) {
         eventContent.innerHTML =
             "<p>Os eventos ainda não estão disponíveis.</p>";
-        return;
+    } else {
+        const event = window.events.find(
+            (item) => String(item.id) === eventId
+        );
+
+        if (!event) {
+            eventContent.innerHTML =
+                "<p>Evento não encontrado. Volte para a página de eventos.</p>";
+        } else {
+            eventContent.innerHTML = `
+                <article class="event-information">
+                    <h1>${event.title}</h1>
+                    <p>${event.description ?? "Descrição não disponível."}</p>
+                    <p><strong>Data:</strong> ${event.date ?? "A definir"}</p>
+                    <p><strong>Local:</strong> ${event.location ?? "A definir"}</p>
+                    <p><strong>Preço:</strong> ${
+                        event.price === 0
+                            ? "Gratuito"
+                            : event.price != null
+                                ? `R$ ${event.price}`
+                                : "A consultar"
+                    }</p>
+                </article>
+            `;
+        }
     }
 
-    const event = window.events.find(
-        (item) => String(item.id) === eventId
-    );
+    // Elementos da galeria
+    const galleryContainer =
+        document.getElementById("gallery-container");
+    const galleryModal =
+        document.getElementById("gallery-modal");
+    const modalImage =
+        document.getElementById("modal-image");
+    const closeGalleryButton =
+        document.getElementById("close-gallery");
 
-    if (!event) {
-        eventContent.innerHTML =
-            "<p>Evento não encontrado. Volte para a página de eventos.</p>";
-        return;
+    // Abrir a imagem ampliada
+    if (
+        galleryContainer &&
+        galleryModal &&
+        modalImage &&
+        closeGalleryButton
+    ) {
+        galleryContainer.addEventListener("click", (event) => {
+            const button = event.target.closest(".gallery-item");
+
+            if (!button) return;
+
+            const image = button.querySelector("img");
+
+            modalImage.src = button.dataset.image;
+            modalImage.alt = image
+                ? image.alt
+                : "Imagem do evento";
+
+            galleryModal.hidden = false;
+            closeGalleryButton.focus();
+        });
+
+        // Fechar a galeria
+        function closeGallery() {
+            galleryModal.hidden = true;
+            modalImage.removeAttribute("src");
+        }
+
+        closeGalleryButton.addEventListener(
+            "click",
+            closeGallery
+        );
+
+        galleryModal.addEventListener("click", (event) => {
+            if (event.target === galleryModal) {
+                closeGallery();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (
+                event.key === "Escape" &&
+                !galleryModal.hidden
+            ) {
+                closeGallery();
+            }
+        });
     }
-
-    eventContent.innerHTML = `
-        <article class="event-information">
-            <h1>${event.title}</h1>
-            <p>${event.description ?? "Descrição não disponível."}</p>
-            <p><strong>Data:</strong> ${event.date ?? "A definir"}</p>
-            <p><strong>Local:</strong> ${event.location ?? "A definir"}</p>
-            <p><strong>Preço:</strong> ${
-                event.price === 0
-                    ? "Gratuito"
-                    : event.price != null
-                        ? `R$ ${event.price}`
-                        : "A consultar"
-            }</p>
-        </article>
-    `;
 });

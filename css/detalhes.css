@@ -165,3 +165,68 @@
         width: 100%;
     }
 }
+
+/* ========================================
+   GALERIA INTERATIVA
+   ======================================== */
+
+.gallery-item {
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.gallery-item:focus-visible,
+#close-gallery:focus-visible {
+    outline: 3px solid var(--primary-color, #4f46e5);
+    outline-offset: 3px;
+}
+
+.gallery-item img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.gallery-modal[hidden] {
+    display: none;
+}
+
+.gallery-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.88);
+}
+
+.gallery-modal > img {
+    max-width: min(900px, 100%);
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+#close-gallery {
+    align-self: flex-end;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

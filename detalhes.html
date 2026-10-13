@@ -29,7 +29,7 @@
         </nav>
     </header>
 
-    <main class="event-details">
+    <main class="details-page">
         <a class="back-link" href="eventos.html">
             &larr; Voltar para eventos
         </a>
@@ -38,15 +38,46 @@
             <p>Carregando detalhes do evento...</p>
         </section>
 
-        <section class="event-gallery" aria-label="Galeria do evento">
-            <h2>Galeria do evento</h2>
-            <div id="gallery-container" class="gallery-grid"></div>
+        
+        <section class="event-gallery" aria-labelledby="gallery-title">
+            <h2 id="gallery-title">Galeria do evento</h2>
+
+            <div class="gallery-grid" id="gallery-container">
+                <button class="gallery-item" type="button"
+                    data-image="assets/images/detalhes/evento-1.png"
+                    aria-label="Ampliar imagem 1">
+                    <img src="assets/images/detalhes/evento-1.png"
+                        alt="Palco de um festival de música">
+                </button>
+
+                <button class="gallery-item" type="button"
+                    data-image="assets/images/detalhes/evento-2.png"
+                    aria-label="Ampliar imagem 2">
+                    <img src="assets/images/detalhes/evento-2.png"
+                        alt="Área de alimentação em um festival">
+                </button>
+
+                <button class="gallery-item" type="button"
+                    data-image="assets/images/detalhes/evento-3.png"
+                    aria-label="Ampliar imagem 3">
+                    <img src="assets/images/detalhes/evento-3.png"
+                        alt="Pessoa fotografando um show com o celular">
+                </button>
+            </div>
         </section>
+
+        <div class="gallery-modal" id="gallery-modal" role="dialog"
+            aria-modal="true" aria-label="Visualização da imagem" hidden>
+            <button type="button" id="close-gallery"
+                aria-label="Fechar imagem">Fechar ✕</button>
+            <img id="modal-image" src="" alt="">
+        </div>
+
     </main>
 
      <footer class="site-footer">
         <p>&copy; 2026 Conecta+ — Descubra eventos perto de você.</p>
     </footer>
-    
+
 </body>
 </html>
