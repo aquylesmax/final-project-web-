@@ -98,4 +98,45 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+    
+    // Inscrição no evento usando o storage compartilhado
+    const registerButton = document.getElementById("register-event");
+    const registrationMessage =
+        document.getElementById("registration-message");
+
+    if (registerButton && registrationMessage) {
+        registerButton.addEventListener("click", () => {
+            const params = new URLSearchParams(window.location.search);
+            const eventId = params.get("id");
+
+            if (!eventId) {
+                registrationMessage.textContent =
+                    "Não foi possível identificar o evento.";
+                return;
+            }
+
+            if (
+                typeof window.isRegistered !== "function" ||
+                typeof window.registerEvent !== "function"
+            ) {
+                registrationMessage.textContent =
+                    "O sistema de inscrições ainda não está disponível.";
+                return;
+            }
+
+            if (window.isRegistered(eventId)) {
+                registrationMessage.textContent =
+                    "Você já está inscrito neste evento.";
+                return;
+            }
+
+            window.registerEvent(eventId);
+
+            registrationMessage.textContent =
+                window.isRegistered(eventId)
+                    ? "Inscrição realizada com sucesso!"
+                    : "Não foi possível concluir a inscrição.";
+        });
+    }
+
 });
