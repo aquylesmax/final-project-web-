@@ -1,0 +1,167 @@
+
+/* ========================================
+   CONECTA+ — PAGINA DE DETALHES
+   ======================================== */
+
+.details-page {
+    width: min(1100px, 92%);
+    margin: 40px auto;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: var(--primary-color, #4f46e5);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: var(--secondary-color, #7c3aed);
+    text-decoration: underline;
+}
+
+.event-details {
+    padding: 32px;
+    background-color: var(--surface-color, #ffffff);
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.event-details h1 {
+    margin-bottom: 20px;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.2;
+    color: var(--text-color, #222222);
+}
+
+.event-information {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.event-information p {
+    margin: 0;
+    padding: 16px;
+    background-color: var(--background-color, #f5f5fa);
+    border-radius: 10px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.event-description {
+    margin-top: 24px;
+    line-height: 1.8;
+    color: var(--text-color, #333333);
+}
+
+.event-gallery {
+    margin-top: 36px;
+}
+
+.event-gallery h2 {
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    color: var(--text-color, #222222);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.gallery-grid img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.03);
+}
+
+.event-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.event-actions button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--primary-color, #4f46e5);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.event-actions button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.event-message {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+.event-message:empty {
+    display: none;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+    .details-page {
+        margin: 28px auto;
+    }
+
+    .event-details {
+        padding: 24px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Celular */
+@media (max-width: 480px) {
+    .details-page {
+        width: 94%;
+        margin: 20px auto;
+    }
+
+    .event-details {
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .event-information {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .event-actions {
+        flex-direction: column;
+    }
+
+    .event-actions button {
+        width: 100%;
+    }
+}
