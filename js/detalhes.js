@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         closeGalleryButton
     ) {
         galleryContainer.addEventListener("click", (event) => {
-            const button = event.target.closest(".gallery-item");
+        const button = event.target.closest?.(".gallery-item");
 
             if (!button) return;
 
