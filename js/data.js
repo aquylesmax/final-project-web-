@@ -50,3 +50,6 @@ const EVENTS = [
 ];
 
 window.EVENTS = EVENTS;
+
+// Compatibilidade com paginas que usam window.events
+window.events = EVENTS;
