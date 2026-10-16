@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Descubra eventos e experiências na sua cidade com o Conecta+.">
+  <title>Conecta+ | Descubra sua cidade</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/home.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Navegação principal">
+      <a class="brand" href="index.html">conecta<span>+</span></a>
+      <div class="nav-links">
+        <a href="index.html" aria-current="page">Início</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="agenda.html">Minha agenda</a>
+        <a href="perfil.html">Meu perfil</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container hero-content">
+        <span class="hero-label">Sua cidade tem mais para oferecer</span>
+        <h1>Encontre experiências que conectam <span>você.</span></h1>
+        <p>Descubra eventos, conheça novas atividades e organize os momentos que você quer viver.</p>
+        <div class="hero-actions">
+          <a class="button" href="eventos.html">Explorar eventos</a>
+          <a class="button button-secondary" href="agenda.html">Ver minha agenda</a>
+        </div>
+        <form class="home-search" id="home-search">
+          <input id="home-search-input" type="search" placeholder="Busque por evento ou categoria" aria-label="Buscar eventos">
+          <button class="button" type="submit">Buscar</button>
+        </form>
+      </div>
+    </section>
+    <section class="section container">
+      <div class="section-heading">
+        <h2>Experiências em destaque</h2>
+        <p>Encontre sua próxima experiência.</p>
+      </div>
+      <div class="event-grid" id="featured-events" aria-live="polite">
+        <p>Carregando eventos...</p>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container"><p>Conecta+ — descubra, participe e conecte-se.</p></div>
+  </footer>
+</body>
+</html>
