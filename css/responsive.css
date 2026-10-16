@@ -1,0 +1,43 @@
+@media (max-width: 800px) {
+  .navbar {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-block: 16px;
+  }
+
+  .nav-links {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+
+  .event-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero {
+    padding-block: 64px 48px;
+  }
+}
+
+@media (max-width: 540px) {
+  .container {
+    width: min(100% - 28px, var(--container-width));
+  }
+
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding-block: 44px;
+  }
+
+  .home-search {
+    flex-direction: column;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.35rem, 12vw, 3.5rem);
+  }
+}
