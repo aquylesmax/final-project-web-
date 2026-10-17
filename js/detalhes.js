@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         closeGalleryButton
     ) {
         galleryContainer.addEventListener("click", (event) => {
-        const button = event.target.closest?.(".gallery-item");
+            const button = event.target.closest?.(".gallery-item");
 
             if (!button) return;
 
@@ -99,46 +99,62 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-    // Inscrição no evento usando o storage compartilhado
+   
+    // Integração com a agenda compartilhada
     const registerButton = document.getElementById("register-event");
     const registrationMessage =
         document.getElementById("registration-message");
 
     if (registerButton && registrationMessage) {
-        registerButton.addEventListener("click", () => {
-            const params = new URLSearchParams(window.location.search);
-            const eventId = params.get("id");
+        const eventId = new URLSearchParams(
+            window.location.search
+        ).get("id");
 
-            if (!eventId) {
-                registrationMessage.textContent =
-                    "Não foi possível identificar o evento.";
-                return;
-            }
+        const storage = window.ConectaStorage;
+        const eventExists = Array.isArray(window.EVENTS) &&
+            window.EVENTS.some(
+                (item) => String(item.id) === eventId
+            );
 
-            if (
-                typeof window.isRegistered !== "function" ||
-                typeof window.registerEvent !== "function"
-            ) {
-                registrationMessage.textContent =
-                    "O sistema de inscrições ainda não está disponível.";
-                return;
-            }
-
-            if (window.isRegistered(eventId)) {
-                registrationMessage.textContent =
-                    "Você já está inscrito neste evento.";
-                return;
-            }
-
-            window.registerEvent(eventId);
-
+        if (!eventId || !eventExists) {
+            registerButton.disabled = true;
             registrationMessage.textContent =
-                window.isRegistered(eventId)
-                    ? "Inscrição realizada com sucesso!"
-                    : "Não foi possível concluir a inscrição.";
-        });
+                "Não foi possível identificar um evento válido.";
+        } else if (
+            !storage ||
+            typeof storage.isSaved !== "function" ||
+            typeof storage.toggleAgenda !== "function"
+        ) {
+            registerButton.disabled = true;
+            registrationMessage.textContent =
+                "A agenda ainda não está disponível.";
+        } else {
+            function updateAgendaButton() {
+                const saved = storage.isSaved(eventId);
+
+                registerButton.textContent = saved
+                    ? "Remover da minha agenda"
+                    : "Adicionar à minha agenda";
+            }
+
+            updateAgendaButton();
+
+            registerButton.addEventListener("click", () => {
+                storage.toggleAgenda(eventId);
+
+                const saved = storage.isSaved(eventId);
+
+                registrationMessage.textContent = saved
+                    ? "Evento adicionado à sua agenda!"
+                    : "Evento removido da sua agenda.";
+
+                updateAgendaButton();
+            });
+        }
     }
 
+    
+    // Compartilhamento do evento
     const shareButton = document.getElementById("share-event");
     const shareMessage = document.getElementById("share-message");
 
@@ -172,5 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
 
 });
