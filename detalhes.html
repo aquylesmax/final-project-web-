@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confira os detalhes dos eventos no Conecta+">
+    <title>Detalhes do evento | Conecta+</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/detalhes.css">
+
+    <script src="js/data.js" defer></script>
+    <script src="js/storage.js" defer></script>
+    <script src="js/detalhes.js" defer></script>
+
+</head>
+<body>
+
+    <header class="site-header">
+        <a class="logo" href="index.html">Conecta+</a>
+
+        <nav class="main-nav" aria-label="Navegação principal">
+            <a href="index.html">Início</a>
+            <a href="eventos.html">Explorar eventos</a>
+            <a href="agenda.html">Minha agenda</a>
+            <a href="perfil.html">Meu perfil</a>
+        </nav>
+    </header>
+
+    <main class="details-page">
+        <a class="back-link" href="eventos.html">
+            &larr; Voltar para eventos
+        </a>
+
+        <section id="event-content" aria-live="polite">
+            <p>Carregando detalhes do evento...</p>
+        </section>
+
+        <div class="event-actions">
+            <button type="button" id="share-event">
+                Compartilhar evento
+            </button>
+
+            <p id="share-message"
+            class="event-message"
+            role="status"
+            aria-live="polite"></p>
+        </div>
+           
+        <div class="event-actions">
+            <button type="button" id="register-event">
+                Adicionar à minha agenda
+            </button>
+
+            <p id="registration-message"
+            class="event-message"
+            role="status"
+            aria-live="polite"></p>
+        </div>
+
+        <section class="event-gallery" aria-labelledby="gallery-title">
+            <h2 id="gallery-title">Galeria do evento</h2>
+
+            <div class="gallery-grid" id="gallery-container">
+                <button class="gallery-item" type="button"
+                    data-image="assets/images/detalhes/evento-1.png"
+                    aria-label="Ampliar imagem 1">
+                    <img src="assets/images/detalhes/evento-1.png"
+                        alt="Palco de um festival de música">
+                </button>
+
+                <button class="gallery-item" type="button"
+                    data-image="assets/images/detalhes/evento-2.png"
+                    aria-label="Ampliar imagem 2">
+                    <img src="assets/images/detalhes/evento-2.png"
+                        alt="Área de alimentação em um festival">
+                </button>
+
+                <button class="gallery-item" type="button"
+                    data-image="assets/images/detalhes/evento-3.png"
+                    aria-label="Ampliar imagem 3">
+                    <img src="assets/images/detalhes/evento-3.png"
+                        alt="Pessoa fotografando um show com o celular">
+                </button>
+            </div>
+        </section>
+
+        <div class="gallery-modal" id="gallery-modal" role="dialog"
+            aria-modal="true" aria-label="Visualização da imagem" hidden>
+            <button type="button" id="close-gallery"
+                aria-label="Fechar imagem">Fechar ✕</button>
+            <img id="modal-image" src="" alt="">
+        </div>
+
+    </main>
+
+     <footer class="site-footer">
+        <p>&copy; 2026 Conecta+ — Descubra eventos perto de você.</p>
+    </footer>
+
+</body>
+</html>
