@@ -200,3 +200,5 @@
     render();
   }
 })();
+
+// Lógica de pesquisa, filtros e ordenação dos eventos.
