@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Descubra eventos, encontre novas experiências e organize sua agenda com o Conecta+.">
+  <title>Explorar eventos | Conecta+</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/eventos.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/eventos.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Navegação principal">
+      <a class="brand" href="index.html" aria-label="Conecta+ - início">Conecta<span>+</span></a>
+      <div class="nav-links">
+        <a href="index.html">Início</a>
+        <a href="eventos.html" aria-current="page">Explorar eventos</a>
+        <a href="agenda.html">Minha agenda</a>
+        <a href="perfil.html">Perfil</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="events-hero">
+      <div class="container events-hero-content">
+        <span class="events-eyebrow">DESCUBRA ALGO NOVO</span>
+        <h1>Encontre seu próximo <span>grande momento.</span></h1>
+        <p>Explore experiências na sua cidade, conheça pessoas e encontre eventos que combinam com você.</p>
+        <a class="button events-hero-button" href="#explorar">Explorar eventos <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="events-hero-decoration" aria-hidden="true">✳</div>
+    </section>
+
+    <section class="section container" id="explorar">
+      <div class="section-heading">
+        <h2>Eventos para você</h2>
+        <p>Use a busca e os filtros para encontrar sua próxima experiência.</p>
+      </div>
+
+      <form class="events-filters" id="event-filters" role="search">
+        <label class="search-field">
+          <span class="visually-hidden">Buscar eventos</span>
+          <span aria-hidden="true">⌕</span>
+          <input aria-label="Pesquisar eventos"  id="event-search" type="search" placeholder="Buscar por nome, local ou descrição..." autocomplete="off">
+        </label>
+
+        <label class="filter-field">
+          <span class="visually-hidden">Filtrar por categoria</span>
+          <select id="event-category">
+            <option value="">Todas as categorias</option>
+          </select>
+        </label>
+
+        <label class="filter-field">
+          <span class="visually-hidden">Ordenar eventos</span>
+          <select id="event-sort">
+            <option value="date-asc">Mais próximos</option>
+            <option value="date-desc">Mais distantes</option>
+            <option value="title-asc">Nome: A–Z</option>
+            <option value="title-desc">Nome: Z–A</option>
+          </select>
+        </label>
+
+        <button class="button button-secondary events-clear" id="event-clear" type="button">Limpar</button>
+      </form>
+
+      <div class="events-results-bar">
+        <p id="events-count" aria-live="polite">Carregando eventos...</p>
+        <span class="events-location"><span aria-hidden="true">⌖</span> Sorocaba e região</span>
+      </div>
+
+      <div id="events-grid" class="event-grid events-grid" aria-live="polite"></div>
+
+      <div id="events-empty" class="events-empty" hidden>
+        <span class="events-empty-icon" aria-hidden="true">⌕</span>
+        <h3>Nenhum evento encontrado</h3>
+        <p>Tente mudar a busca ou selecionar outra categoria.</p>
+        <button class="button" id="event-empty-clear" type="button">Ver todos os eventos</button>
+      </div>
+
+      <p id="events-error" class="events-error" role="alert" hidden></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Conecta+ — conectando você a novas experiências.</p>
+    </div>
+  </footer>
+</body>
+</html>
+
+<!-- P�gina de explora��o de eventos do Conecta+. -->
