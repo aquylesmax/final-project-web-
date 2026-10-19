@@ -265,44 +265,55 @@
 }
 
 
+
 /* ========================================
-   CABEÇALHO DA PÁGINA DE DETALHES
+   CABEÇALHO — CONECTA+
    ======================================== */
 
 .site-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 18px 4%;
-    background-color: #352522;
-    color: #ffffff;
+    gap: 24px;
+    width: 100%;
+    padding: 20px max(5%, calc((100% - 1120px) / 2));
+    background-color: #ffffff;
+    color: #25243a;
+    border-bottom: 1px solid #f0eff5;
 }
 
 .site-header .logo {
-    color: #ffffff;
-    font-size: 1.5rem;
-    font-weight: 700;
+    color: #25243a;
+    font-size: 1.35rem;
+    font-weight: 800;
     text-decoration: none;
+    letter-spacing: -0.8px;
 }
 
 .site-header .main-nav {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 26px;
 }
 
 .site-header .main-nav a {
-    color: #ffffff;
+    color: #77778e;
+    font-size: 0.9rem;
+    font-weight: 600;
     text-decoration: none;
-    font-weight: 500;
     transition: color 0.2s ease;
 }
 
-.site-header .main-nav a:hover {
-    color: #d8c4bd;
+.site-header .main-nav a:hover,
+.site-header .main-nav a:focus-visible {
+    color: #6254f5;
+}
+
+/* Link da página atual */
+.site-header .main-nav a[aria-current="page"] {
+    color: #6254f5;
 }
 
 @media (max-width: 600px) {
@@ -313,7 +324,10 @@
     }
 
     .site-header .main-nav {
-        gap: 14px;
+        justify-content: flex-start;
+        gap: 16px;
     }
 }
-
+.site-header .logo-plus {
+    color: #6254f5;
+}
