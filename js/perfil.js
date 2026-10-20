@@ -1,208 +1,288 @@
+(() => {
+  "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
-    initializeProfilePage();
-});
+  /* ----------------------------------------
+     1. ELEMENTOS
+  ---------------------------------------- */
+  const form = document.getElementById("profile-form");
+  const nameInput = document.getElementById("profile-name-input");
+  const cityInput = document.getElementById("profile-city-input");
+  const message = document.getElementById("profile-message");
 
-function initializeProfilePage() {
-    loadProfile();
-    initializeProfileForm();
-    initializeThemeButtons();
-    renderNotifications();
-}
+  const cardName = document.getElementById("profile-name");
+  const cardCity = document.getElementById("profile-city");
+  const cardInitial = document.getElementById("profile-initial");
+  const savedCount = document.getElementById("profile-saved-count");
+  const interestCount = document.getElementById("profile-interest-count");
 
-function loadProfile() {
+  const lightButton = document.getElementById("light-theme");
+  const darkButton = document.getElementById("dark-theme");
+
+  const notificationsList = document.getElementById("notifications-list");
+  const notificationsEmpty = document.getElementById("notifications-empty");
+  const notificationsCount = document.getElementById("notifications-count");
+  const readAllButton = document.getElementById("notifications-read-all");
+
+  if (!form || !nameInput || !cityInput) return;
+
+  const DEFAULT_PROFILE = { name: "Visitante", city: "Sorocaba", interests: [] };
+
+  const events = Array.isArray(window.EVENTS)
+    ? window.EVENTS
+    : Array.isArray(window.events)
+      ? window.events
+      : [];
+
+  /* ----------------------------------------
+     2. ACESSO AO STORAGE
+     Aceita ConectaStorage.fn() ou funções globais de storage.js.
+  ---------------------------------------- */
+  function callStorage(name, ...args) {
+    const storage = window.ConectaStorage;
+
+    if (storage && typeof storage[name] === "function") {
+      return storage[name](...args);
+    }
+
+    if (typeof window[name] === "function") {
+      return window[name](...args);
+    }
+
+    throw new Error(`Função de storage indisponível: ${name}`);
+  }
+
+  function safeCall(name, fallback, ...args) {
+    try {
+      const result = callStorage(name, ...args);
+
+      return result === undefined ? fallback : result;
+    } catch (exception) {
+      return fallback;
+    }
+  }
+
+  function getProfile() {
+    const profile = safeCall("getProfile", DEFAULT_PROFILE) || DEFAULT_PROFILE;
+
+    return {
+      name: profile.name || DEFAULT_PROFILE.name,
+      city: profile.city || DEFAULT_PROFILE.city,
+      interests: Array.isArray(profile.interests) ? profile.interests : []
+    };
+  }
+
+  function getNotifications() {
+    const list = safeCall("getNotifications", []);
+
+    return Array.isArray(list) ? list : [];
+  }
+
+  /* ----------------------------------------
+     3. FUNÇÕES AUXILIARES
+  ---------------------------------------- */
+  function getInitial(name) {
+    return name && name.trim() ? name.trim().charAt(0).toUpperCase() : "V";
+  }
+
+  function getCheckboxes() {
+    return form.querySelectorAll('input[name="interests"]');
+  }
+
+  function showMessage(text, state) {
+    message.textContent = text;
+
+    if (state) {
+      message.dataset.state = state;
+    } else {
+      delete message.dataset.state;
+    }
+  }
+
+  function countSavedEvents() {
+    return events.filter(event => safeCall("isSaved", false, event.id)).length;
+  }
+
+  /* ----------------------------------------
+     4. PERFIL
+  ---------------------------------------- */
+  function renderProfile() {
     const profile = getProfile();
 
-    document.querySelector("#profile-name").textContent =
-        profile.name;
+    cardName.textContent = profile.name;
+    cardCity.textContent = profile.city;
+    cardInitial.textContent = getInitial(profile.name);
 
-    document.querySelector("#profile-city").textContent =
-        profile.city;
+    nameInput.value = profile.name;
+    cityInput.value = profile.city;
 
-    document.querySelector("#profile-name-input").value =
-        profile.name;
-
-    document.querySelector("#profile-city-input").value =
-        profile.city;
-
-    document.querySelector("#profile-initial").textContent =
-        getProfileInitial(profile.name);
-
-    document
-        .querySelectorAll('input[name="interests"]')
-        .forEach((checkbox) => {
-            checkbox.checked =
-                profile.interests.includes(checkbox.value);
-        });
-}
-
-function initializeProfileForm() {
-    const form = document.querySelector("#profile-form");
-
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const name = document
-            .querySelector("#profile-name-input")
-            .value.trim();
-
-        const city = document
-            .querySelector("#profile-city-input")
-            .value.trim();
-
-        const interests = Array.from(
-            document.querySelectorAll(
-                'input[name="interests"]:checked'
-            )
-        ).map((checkbox) => checkbox.value);
-
-        if (!name || !city) {
-            showProfileMessage("Preencha nome e cidade.");
-            return;
-        }
-
-        saveProfile({
-            name,
-            city,
-            interests
-        });
-
-        loadProfile();
-
-        addNotification("Seu perfil foi atualizado.");
-        renderNotifications();
-
-        showProfileMessage(
-            "Perfil atualizado com sucesso."
-        );
-    });
-}
-
-function initializeThemeButtons() {
-    const lightButton =
-        document.querySelector("#light-theme");
-
-    const darkButton =
-        document.querySelector("#dark-theme");
-
-    lightButton.addEventListener("click", () => {
-        changeProfileTheme("light");
+    getCheckboxes().forEach(checkbox => {
+      checkbox.checked = profile.interests.includes(checkbox.value);
     });
 
-    darkButton.addEventListener("click", () => {
-        changeProfileTheme("dark");
-    });
+    interestCount.textContent = profile.interests.length;
+    savedCount.textContent = countSavedEvents();
+  }
 
-    updateThemeButtons();
-}
+  function validateField(input) {
+    const valid = input.value.trim().length > 0;
 
-function changeProfileTheme(theme) {
-    setTheme(theme);
+    input.setAttribute("aria-invalid", String(!valid));
 
+    return valid;
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const validName = validateField(nameInput);
+    const validCity = validateField(cityInput);
+
+    if (!validName || !validCity) {
+      showMessage("Preencha nome e cidade.", "error");
+      (validName ? cityInput : nameInput).focus();
+      return;
+    }
+
+    const interests = Array.from(getCheckboxes())
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+
+    try {
+      callStorage("saveProfile", {
+        name: nameInput.value.trim(),
+        city: cityInput.value.trim(),
+        interests
+      });
+    } catch (exception) {
+      showMessage("Não foi possível salvar seu perfil neste navegador.", "error");
+      return;
+    }
+
+    safeCall("addNotification", null, "Seu perfil foi atualizado.");
+
+    renderProfile();
+    renderNotifications();
+    showMessage("Perfil atualizado com sucesso.", "success");
+  }
+
+  /* ----------------------------------------
+     5. TEMA
+  ---------------------------------------- */
+  function getCurrentTheme() {
+    return safeCall("getTheme", "light") === "dark" ? "dark" : "light";
+  }
+
+  function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
+  }
 
-    addNotification(
-        theme === "dark"
-            ? "Tema escuro ativado."
-            : "Tema claro ativado."
+  function updateThemeButtons() {
+    const isDark = getCurrentTheme() === "dark";
+
+    lightButton.classList.toggle("selected", !isDark);
+    darkButton.classList.toggle("selected", isDark);
+    lightButton.setAttribute("aria-pressed", String(!isDark));
+    darkButton.setAttribute("aria-pressed", String(isDark));
+  }
+
+  function changeTheme(theme) {
+    safeCall("setTheme", null, theme);
+    applyTheme(theme);
+
+    safeCall(
+      "addNotification",
+      null,
+      theme === "dark" ? "Tema escuro ativado." : "Tema claro ativado."
     );
 
     updateThemeButtons();
     renderNotifications();
-}
+  }
 
-function updateThemeButtons() {
-    const theme = getTheme();
+  /* ----------------------------------------
+     6. NOTIFICAÇÕES
+  ---------------------------------------- */
+  function createNotification(notification) {
+    const article = document.createElement("article");
+    article.className = notification.read
+      ? "notification-item read"
+      : "notification-item";
 
-    const lightButton =
-        document.querySelector("#light-theme");
+    const content = document.createElement("div");
+    const title = document.createElement("strong");
+    const text = document.createElement("p");
 
-    const darkButton =
-        document.querySelector("#dark-theme");
+    title.textContent = "Conecta+";
+    text.textContent = notification.message;
+    content.append(title, text);
+    article.appendChild(content);
 
-    const isLight = theme === "light";
-    const isDark = theme === "dark";
+    if (!notification.read) {
+      const button = document.createElement("button");
 
-    lightButton.classList.toggle("selected", isLight);
-    darkButton.classList.toggle("selected", isDark);
+      button.className = "notification-read";
+      button.type = "button";
+      button.dataset.readId = notification.id;
+      button.textContent = "Marcar como lida";
+      article.appendChild(button);
+    }
 
-    lightButton.setAttribute(
-        "aria-pressed",
-        String(isLight)
-    );
+    return article;
+  }
 
-    darkButton.setAttribute(
-        "aria-pressed",
-        String(isDark)
-    );
-}
-
-function renderNotifications() {
-    const container =
-        document.querySelector("#notifications-list");
-
-    const empty =
-        document.querySelector("#notifications-empty");
-
+  function renderNotifications() {
     const notifications = getNotifications();
+    const unread = notifications.filter(item => !item.read);
 
-    container.replaceChildren();
+    notificationsList.replaceChildren(...notifications.map(createNotification));
+    notificationsEmpty.hidden = notifications.length !== 0;
 
-    if (notifications.length === 0) {
-        empty.classList.remove("hidden");
-        return;
-    }
+    notificationsCount.hidden = unread.length === 0;
+    notificationsCount.textContent = unread.length;
+    readAllButton.hidden = unread.length === 0;
+  }
 
-    empty.classList.add("hidden");
+  function markAsRead(id) {
+    const original = getNotifications().find(item => String(item.id) === String(id));
 
-    notifications.forEach((notification) => {
-        const article = document.createElement("article");
+    safeCall("markNotificationRead", null, original ? original.id : id);
+    renderNotifications();
+  }
 
-        article.className = notification.read
-            ? "notification-item read"
-            : "notification-item";
+  function markAllAsRead() {
+    getNotifications()
+      .filter(item => !item.read)
+      .forEach(item => safeCall("markNotificationRead", null, item.id));
 
-        const content = document.createElement("div");
+    renderNotifications();
+  }
 
-        const title = document.createElement("strong");
-        title.textContent = "Conecta+";
+  /* ----------------------------------------
+     7. EVENTOS
+  ---------------------------------------- */
+  form.addEventListener("submit", handleSubmit);
 
-        const message = document.createElement("p");
-        message.textContent = notification.message;
-
-        content.append(title, message);
-        article.appendChild(content);
-
-        if (!notification.read) {
-            const button = document.createElement("button");
-
-            button.className = "notification-read";
-            button.type = "button";
-            button.textContent = "Marcar como lida";
-
-            button.addEventListener("click", () => {
-                markNotificationRead(notification.id);
-                renderNotifications();
-            });
-
-            article.appendChild(button);
-        }
-
-        container.appendChild(article);
+  [nameInput, cityInput].forEach(input => {
+    input.addEventListener("input", () => {
+      if (input.getAttribute("aria-invalid") === "true") validateField(input);
     });
-}
+  });
 
-function showProfileMessage(message) {
-    const element =
-        document.querySelector("#profile-message");
+  lightButton.addEventListener("click", () => changeTheme("light"));
+  darkButton.addEventListener("click", () => changeTheme("dark"));
+  readAllButton.addEventListener("click", markAllAsRead);
 
-    element.textContent = message;
-}
+  notificationsList.addEventListener("click", event => {
+    const button = event.target.closest("[data-read-id]");
 
-function getProfileInitial(name) {
-    if (!name || !name.trim()) {
-        return "V";
-    }
+    if (button) markAsRead(button.dataset.readId);
+  });
 
-    return name.trim().charAt(0).toUpperCase();
-}
+  /* ----------------------------------------
+     8. INICIALIZAÇÃO
+  ---------------------------------------- */
+  applyTheme(getCurrentTheme());
+  renderProfile();
+  updateThemeButtons();
+  renderNotifications();
+})();
