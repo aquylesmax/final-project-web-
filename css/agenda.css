@@ -1,73 +1,8 @@
+
 /* ========================================
    CONECTA+ | MINHA AGENDA
    Arquivo: css/agenda.css
 ======================================== */
-
-/* Destaque da página (hero) */
-.agenda-hero {
-  padding: 96px 24px 80px;
-  background:
-    radial-gradient(ellipse at 85% 10%, rgba(91, 80, 245, 0.12), transparent 55%),
-    linear-gradient(180deg, #f8f8ff 0%, var(--surface, #ffffff) 100%);
-}
-
-.agenda-hero-inner {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.agenda-hero-label {
-  margin: 0 0 20px;
-  color: var(--primary, #5b50f5);
-  font-size: 0.95rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.agenda-hero-title {
-  max-width: 14ch;
-  margin: 0 0 24px;
-  color: var(--text-primary, #1f2140);
-  font-size: clamp(2.6rem, 7vw, 4.75rem);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.045em;
-}
-
-.agenda-hero-title span {
-  color: var(--primary, #5b50f5);
-}
-
-.agenda-hero-text {
-  max-width: 52ch;
-  margin: 0 0 36px;
-  color: var(--text-secondary, #6b7280);
-  font-size: 1.2rem;
-  line-height: 1.7;
-}
-
-.agenda-hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.agenda-hero-actions .agenda-button {
-  min-height: 58px;
-  padding: 0 26px;
-  background: var(--primary, #5b50f5);
-  border-radius: 12px;
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-
-.agenda-hero-actions .agenda-button.is-secondary {
-  background: var(--surface, #ffffff);
-  color: var(--text-primary, #1f2140);
-  border-color: var(--border-color, #e5e7eb);
-}
 
 /* Estrutura principal */
 .agenda-page {
@@ -389,8 +324,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px 14px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border-color, #e5e7eb);
   color: var(--text-secondary, #6b7280);
   font-size: 0.82rem;
 }
@@ -430,8 +363,6 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border-color, #e5e7eb);
 }
 
 .agenda-button {
@@ -496,35 +427,6 @@
   border-bottom-color: var(--primary, #6d28d9);
 }
 
-/* Divisórias entre seções */
-.agenda-divider {
-  height: 0;
-  margin: 32px 0;
-  border: 0;
-  border-top: 1px solid var(--border-color, #e5e7eb);
-}
-
-.agenda-panel-header p {
-  margin: 4px 0 0;
-  color: var(--text-secondary, #6b7280);
-  font-size: 0.9rem;
-}
-
-.agenda-section {
-  padding: 24px;
-  background: var(--surface, #ffffff);
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: var(--radius-lg, 16px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-}
-
-/* Listas em duas colunas (inscrições e favoritos) */
-.agenda-events.is-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
 /* Estado vazio */
 .agenda-empty {
   padding: 32px 20px;
@@ -563,10 +465,6 @@
 ======================================== */
 
 @media (max-width: 900px) {
-  .agenda-events.is-grid {
-    grid-template-columns: 1fr;
-  }
-
   .agenda-layout {
     grid-template-columns: 1fr;
   }
@@ -577,18 +475,6 @@
 }
 
 @media (max-width: 600px) {
-  .agenda-hero {
-    padding: 56px 16px 48px;
-  }
-
-  .agenda-hero-text {
-    font-size: 1.05rem;
-  }
-
-  .agenda-hero-actions .agenda-button {
-    width: 100%;
-  }
-
   .agenda-page {
     padding: 24px 16px;
   }
