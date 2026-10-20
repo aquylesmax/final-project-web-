@@ -1,256 +1,133 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="Organize seus eventos no Conecta+."
-    >
-
-    <title>Minha Agenda | Conecta+</title>
-
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/agenda.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Organize seus eventos salvos e acompanhe as datas no calendário do Conecta+.">
+  <title>Minha agenda | Conecta+</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/agenda.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/agenda.js" defer></script>
 </head>
-
 <body>
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Navegação principal">
+      <a class="brand" href="index.html" aria-label="Conecta+ - início">conecta<span>+</span></a>
+      <div class="nav-links">
+        <a href="index.html">Início</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="agenda.html" aria-current="page">Minha agenda</a>
+        <a href="perfil.html">Meu perfil</a>
+      </div>
+    </nav>
+  </header>
 
-    <header class="site-header">
-        <div class="container navbar">
-
-            <a class="logo" href="index.html">
-                Conecta<span class="logo-plus">+</span>
-            </a>
-
-            <button
-                class="menu-toggle"
-                type="button"
-                aria-label="Abrir menu"
-                aria-expanded="false"
-            >
-                ☰
-            </button>
-
-            <nav
-                class="nav-menu"
-                aria-label="Navegação principal"
-            >
-                <a class="nav-link" href="index.html">
-                    Início
-                </a>
-
-                <a class="nav-link" href="eventos.html">
-                    Explorar
-                </a>
-
-                <a
-                    class="nav-link active"
-                    href="agenda.html"
-                    aria-current="page"
-                >
-                    Minha Agenda
-                </a>
-
-                <a class="nav-link" href="perfil.html">
-                    Meu Perfil
-                </a>
-            </nav>
-
+  <main>
+    <!-- ==================== DESTAQUE ==================== -->
+    <section class="agenda-hero">
+      <div class="container agenda-hero-content">
+        <span class="agenda-eyebrow">MINHA AGENDA</span>
+        <h1>Organize os eventos que movem <span>você.</span></h1>
+        <p>Acompanhe os eventos que você salvou e veja cada data importante no calendário.</p>
+        <div class="agenda-hero-actions">
+          <a class="button" href="eventos.html">Explorar eventos</a>
+          <a class="button button-secondary" href="#meus-eventos">Ver meus eventos</a>
         </div>
-    </header>
+      </div>
+      <div class="agenda-hero-decoration" aria-hidden="true">✳</div>
+    </section>
 
-    <main>
+    <!-- ==================== RESUMO ==================== -->
+    <section class="section container" aria-label="Resumo da agenda">
+      <div class="agenda-summary">
+        <article class="agenda-summary-card">
+          <span class="agenda-summary-icon" aria-hidden="true">📅</span>
+          <div>
+            <h2>Na minha agenda</h2>
+            <p class="agenda-summary-value" id="saved-count">0</p>
+          </div>
+        </article>
 
-        <section class="agenda-hero">
-            <div class="container">
+        <article class="agenda-summary-card">
+          <span class="agenda-summary-icon" aria-hidden="true">⏰</span>
+          <div>
+            <h2>Próximo evento</h2>
+            <p class="agenda-summary-value" id="next-event">Nenhum</p>
+          </div>
+        </article>
 
-                <span class="hero-label">
-                    Minha agenda
-                </span>
+        <article class="agenda-summary-card">
+          <span class="agenda-summary-icon" aria-hidden="true">🗓️</span>
+          <div>
+            <h2>Neste mês</h2>
+            <p class="agenda-summary-value" id="month-count">0</p>
+          </div>
+        </article>
+      </div>
 
-                <h1>Organize seus eventos</h1>
+      <hr class="agenda-divider">
 
-                <p>
-                    Veja suas inscrições e favoritos
-                    em um só lugar.
-                </p>
+      <!-- ==================== CALENDÁRIO E EVENTOS DO DIA ==================== -->
+      <div class="section-heading">
+        <h2>Calendário</h2>
+        <p>Escolha uma data para ver os eventos do dia.</p>
+      </div>
 
-            </div>
+      <div class="agenda-layout">
+        <section class="agenda-panel" aria-label="Calendário mensal">
+          <div class="calendar-navigation">
+            <button class="calendar-nav-button" id="calendar-prev" type="button" aria-label="Mês anterior">←</button>
+            <h3 class="calendar-month" id="calendar-month" aria-live="polite">Calendário</h3>
+            <button class="calendar-nav-button" id="calendar-next" type="button" aria-label="Próximo mês">→</button>
+          </div>
+
+          <div class="calendar-grid" id="calendar-grid"></div>
+
+          <div class="calendar-legend">
+            <span class="calendar-legend-item"><span class="calendar-legend-dot"></span> Há evento</span>
+            <span class="calendar-legend-item"><span class="calendar-legend-dot is-saved"></span> Na minha agenda</span>
+          </div>
         </section>
 
-        <section class="section">
-            <div class="container">
-
-                <div class="agenda-summary">
-
-                    <div class="summary-card">
-                        <span>Inscrições</span>
-                        <strong id="registration-count">0</strong>
-                    </div>
-
-                    <div class="summary-card">
-                        <span>Favoritos</span>
-                        <strong id="favorite-count">0</strong>
-                    </div>
-
-                    <div class="summary-card">
-                        <span>Próximo evento</span>
-                        <strong id="next-event">Nenhum</strong>
-                    </div>
-
-                </div>
-
-                <div class="agenda-layout">
-
-                    <section
-                        class="calendar-panel"
-                        aria-label="Calendário mensal"
-                    >
-
-                        <div class="calendar-header">
-
-                            <button
-                                id="previous-month"
-                                class="calendar-button"
-                                type="button"
-                                aria-label="Mês anterior"
-                            >
-                                ←
-                            </button>
-
-                            <h2 id="calendar-title">
-                                Calendário
-                            </h2>
-
-                            <button
-                                id="next-month"
-                                class="calendar-button"
-                                type="button"
-                                aria-label="Próximo mês"
-                            >
-                                →
-                            </button>
-
-                        </div>
-
-                        <div class="calendar-weekdays" aria-hidden="true">
-                            <span>Dom</span>
-                            <span>Seg</span>
-                            <span>Ter</span>
-                            <span>Qua</span>
-                            <span>Qui</span>
-                            <span>Sex</span>
-                            <span>Sáb</span>
-                        </div>
-
-                        <div
-                            id="calendar-grid"
-                            class="calendar-grid"
-                            aria-label="Dias do mês"
-                        ></div>
-
-                    </section>
-
-                    <section class="agenda-events-panel">
-
-                        <div class="section-header">
-                            <h2>Meus eventos</h2>
-
-                            <p>
-                                Eventos nos quais você está inscrito.
-                            </p>
-                        </div>
-
-                        <div
-                            id="agenda-events"
-                            class="agenda-events"
-                        ></div>
-
-                        <div
-                            id="agenda-empty"
-                            class="agenda-empty hidden"
-                        >
-                            <h3>Sua agenda está vazia</h3>
-
-                            <p>
-                                Explore os eventos e faça sua
-                                primeira inscrição.
-                            </p>
-
-                            <a
-                                class="btn btn-primary"
-                                href="eventos.html"
-                            >
-                                Explorar eventos
-                            </a>
-                        </div>
-
-                    </section>
-
-                </div>
-
-                <section class="favorites-section">
-
-                    <div class="section-header">
-                        <h2>Meus favoritos</h2>
-
-                        <p>
-                            Eventos que você marcou para acompanhar.
-                        </p>
-                    </div>
-
-                    <div
-                        id="favorite-events"
-                        class="favorite-events"
-                    ></div>
-
-                    <div
-                        id="favorites-empty"
-                        class="agenda-empty hidden"
-                    >
-                        <h3>Nenhum favorito ainda</h3>
-
-                        <p>
-                            Você ainda não marcou nenhum evento
-                            como favorito.
-                        </p>
-                    </div>
-
-                </section>
-
-            </div>
+        <section class="agenda-panel" aria-label="Eventos do dia selecionado">
+          <div class="agenda-panel-header">
+            <h3>Eventos do dia</h3>
+            <p id="selected-date-label">Selecione uma data.</p>
+          </div>
+          <div class="agenda-list" id="selected-date-events" aria-live="polite"></div>
         </section>
+      </div>
 
-    </main>
+      <hr class="agenda-divider">
 
-    <footer class="site-footer">
-        <div class="container footer-content">
+      <!-- ==================== EVENTOS SALVOS ==================== -->
+      <div class="section-heading" id="meus-eventos">
+        <h2>Meus eventos</h2>
+        <p>Eventos que você adicionou à sua agenda.</p>
+      </div>
 
-            <div class="footer-brand">
-                Conecta+
-            </div>
+      <div class="agenda-grid" id="saved-events" aria-live="polite"></div>
 
-            <p class="footer-copy">
-                Plataforma acadêmica de descoberta de eventos locais.
-            </p>
+      <div class="agenda-empty" id="saved-empty" hidden>
+        <span class="agenda-empty-icon" aria-hidden="true">📅</span>
+        <h3>Sua agenda está vazia</h3>
+        <p>Explore os eventos e adicione os que você quer viver.</p>
+        <a class="button" href="eventos.html">Explorar eventos</a>
+      </div>
 
-        </div>
-    </footer>
+      <p class="agenda-error" id="agenda-error" role="alert" hidden></p>
+    </section>
+  </main>
 
-    <script src="js/data.js"></script>
-    <script src="js/storage.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/agenda.js"></script>
-
+  <footer class="site-footer">
+    <div class="container">
+      <p>Conecta+ — organize os momentos que você quer viver.</p>
+    </div>
+  </footer>
 </body>
 </html>
