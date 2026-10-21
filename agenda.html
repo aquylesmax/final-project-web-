@@ -105,19 +105,50 @@
 
       <hr class="agenda-divider">
 
-      <!-- ==================== EVENTOS SALVOS ==================== -->
+      <!-- ==================== MEUS EVENTOS (ABAS) ==================== -->
       <div class="section-heading" id="meus-eventos">
         <h2>Meus eventos</h2>
-        <p>Eventos que você adicionou à sua agenda.</p>
+        <p>Gerencie suas inscrições, favoritos e o histórico de eventos.</p>
       </div>
 
-      <div class="agenda-grid" id="saved-events" aria-live="polite"></div>
+      <div class="agenda-tabs" role="tablist" aria-label="Meus eventos">
+        <button class="agenda-tab is-active" id="tab-registered" type="button" role="tab" aria-selected="true" aria-controls="panel-registered" data-tab="registered">
+          Inscritos <span class="agenda-tab-count" id="count-registered">0</span>
+        </button>
+        <button class="agenda-tab" id="tab-favorites" type="button" role="tab" aria-selected="false" aria-controls="panel-favorites" data-tab="favorites">
+          Favoritos <span class="agenda-tab-count" id="count-favorites">0</span>
+        </button>
+        <button class="agenda-tab" id="tab-attended" type="button" role="tab" aria-selected="false" aria-controls="panel-attended" data-tab="attended">
+          Já participei <span class="agenda-tab-count" id="count-attended">0</span>
+        </button>
+      </div>
 
-      <div class="agenda-empty" id="saved-empty" hidden>
-        <span class="agenda-empty-icon" aria-hidden="true">📅</span>
-        <h3>Sua agenda está vazia</h3>
-        <p>Explore os eventos e adicione os que você quer viver.</p>
-        <a class="button" href="eventos.html">Explorar eventos</a>
+      <div class="agenda-tab-panel" id="panel-registered" role="tabpanel" aria-labelledby="tab-registered">
+        <div class="agenda-grid" id="registered-events" aria-live="polite"></div>
+        <div class="agenda-empty" id="registered-empty" hidden>
+          <span class="agenda-empty-icon" aria-hidden="true">📅</span>
+          <h3>Você não está inscrito em nenhum evento</h3>
+          <p>Explore os eventos e inscreva-se nos que você quer viver.</p>
+          <a class="button" href="eventos.html">Explorar eventos</a>
+        </div>
+      </div>
+
+      <div class="agenda-tab-panel" id="panel-favorites" role="tabpanel" aria-labelledby="tab-favorites" hidden>
+        <div class="agenda-grid" id="favorite-events" aria-live="polite"></div>
+        <div class="agenda-empty" id="favorite-empty" hidden>
+          <span class="agenda-empty-icon" aria-hidden="true">♡</span>
+          <h3>Nenhum evento favorito</h3>
+          <p>Toque no coração de um evento para guardá-lo aqui.</p>
+        </div>
+      </div>
+
+      <div class="agenda-tab-panel" id="panel-attended" role="tabpanel" aria-labelledby="tab-attended" hidden>
+        <div class="agenda-grid" id="attended-events" aria-live="polite"></div>
+        <div class="agenda-empty" id="attended-empty" hidden>
+          <span class="agenda-empty-icon" aria-hidden="true">🕘</span>
+          <h3>Seu histórico está vazio</h3>
+          <p>Eventos que já aconteceram podem ser marcados como "Já participei".</p>
+        </div>
       </div>
 
       <p class="agenda-error" id="agenda-error" role="alert" hidden></p>
