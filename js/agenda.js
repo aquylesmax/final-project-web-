@@ -239,6 +239,9 @@
     const attended = isAttended(event.id);
     const past = String(event.date) < todayKey;
     const canAttend = String(event.date) <= todayKey;
+    const art = event.images
+      ? `<img src="${escapeHTML(event.images[0])}" alt="" loading="lazy">`
+      : icon;
 
     const registerButton = `
       <button class="button button-secondary agenda-save-button${registered ? " agenda-danger" : ""}" type="button"
@@ -275,7 +278,7 @@
 
     return `
       <article class="agenda-card${past && mode !== "attended" ? " is-past" : ""}">
-        <div class="agenda-card-art" data-category="${category}" aria-hidden="true">${icon}</div>
+        <div class="agenda-card-art" data-category="${category}" aria-hidden="true">${art}</div>
         <div class="agenda-card-content">
           <div class="agenda-card-top">
             <span class="agenda-card-category">${category}</span>

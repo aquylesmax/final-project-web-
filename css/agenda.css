@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden;
   padding: clamp(64px, 10vw, 112px) 0;
-  background: linear-gradient(125deg, #f0efff 0%, #f8f7ff 55%, #fff7f0 100%);
+  background: var(--color-hero);
 }
 
 .agenda-hero-content {
@@ -97,7 +97,7 @@
   height: 52px;
   place-items: center;
   border-radius: var(--radius-sm);
-  background: #f0efff;
+  background: var(--color-tint);
   font-size: 1.5rem;
 }
 
@@ -214,7 +214,7 @@
 
 .calendar-day:hover {
   border-color: var(--color-primary);
-  background: #f0efff;
+  background: var(--color-tint);
 }
 
 .calendar-day.is-outside {
@@ -314,20 +314,30 @@
 }
 
 .agenda-card-art {
+  position: relative;
+  overflow: hidden;
   display: grid;
   min-height: 110px;
   place-items: center;
-  background: linear-gradient(135deg, #efedff, #faf3ff);
+  background: var(--color-tint-gradient);
   color: var(--color-primary);
   font-size: 2.8rem;
 }
 
-.agenda-card-art[data-category="Tecnologia"] { background: linear-gradient(135deg, #e3f5ff, #edf0ff); }
-.agenda-card-art[data-category="Gastronomia"] { background: linear-gradient(135deg, #fff0e3, #fff8e7); }
+.agenda-card-art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.agenda-card-art[data-category="Tecnologia"] { background: linear-gradient(135deg, var(--art-tech-start), var(--art-tech-end)); }
+.agenda-card-art[data-category="Gastronomia"] { background: linear-gradient(135deg, var(--art-gastro-start), var(--art-gastro-end)); }
 .agenda-card-art[data-category="Música"],
-.agenda-card-art[data-category="Musica"] { background: linear-gradient(135deg, #ffe7ef, #f4eaff); }
-.agenda-card-art[data-category="Esporte"] { background: linear-gradient(135deg, #e3f8eb, #f5fbe6); }
-.agenda-card-art[data-category="Feira"] { background: linear-gradient(135deg, #fff2d9, #fff9ee); }
+.agenda-card-art[data-category="Musica"] { background: linear-gradient(135deg, var(--art-music-start), var(--art-music-end)); }
+.agenda-card-art[data-category="Esporte"] { background: linear-gradient(135deg, var(--art-sport-start), var(--art-sport-end)); }
+.agenda-card-art[data-category="Feira"] { background: linear-gradient(135deg, var(--art-fair-start), var(--art-fair-end)); }
 
 .agenda-card-content {
   display: flex;
@@ -354,7 +364,7 @@
 .agenda-badge {
   padding: 3px 9px;
   border-radius: 999px;
-  background: #f1f1f4;
+  background: var(--color-hover-soft);
   color: var(--color-muted);
   font-size: .72rem;
   font-weight: 700;
@@ -398,7 +408,7 @@
 
 .agenda-save-button[aria-pressed="true"] {
   border-color: var(--color-primary);
-  background: #f0efff;
+  background: var(--color-tint);
   color: var(--color-primary);
 }
 
@@ -435,7 +445,7 @@
 .agenda-error {
   padding: 16px;
   border-radius: var(--radius-sm);
-  background: #fff0f0;
+  background: var(--color-danger-soft);
   color: #8d2222;
 }
 
@@ -542,7 +552,7 @@
   min-width: 24px;
   padding: 2px 8px;
   border-radius: 999px;
-  background: #f0efff;
+  background: var(--color-tint);
   color: var(--color-primary);
   font-size: .78rem;
   text-align: center;
@@ -586,5 +596,5 @@
 }
 
 .agenda-card-footer .agenda-danger:hover {
-  background: #fff0f0;
+  background: var(--color-danger-soft);
 }

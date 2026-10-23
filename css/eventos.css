@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   padding: clamp(64px, 10vw, 112px) 0;
-  background: linear-gradient(125deg, #f0efff 0%, #f8f7ff 55%, #fff7f0 100%);
+  background: var(--color-hero);
 }
 
 .events-hero-content {
@@ -136,33 +136,43 @@
 }
 
 .event-art {
+  position: relative;
+  overflow: hidden;
   display: grid;
   min-height: 145px;
   place-items: center;
-  background: linear-gradient(135deg, #efedff, #faf3ff);
+  background: var(--color-tint-gradient);
   color: var(--color-primary);
   font-size: 3.2rem;
 }
 
+.event-art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .event-art[data-category="Tecnologia"] {
-  background: linear-gradient(135deg, #e3f5ff, #edf0ff);
+  background: linear-gradient(135deg, var(--art-tech-start), var(--art-tech-end));
 }
 
 .event-art[data-category="Gastronomia"] {
-  background: linear-gradient(135deg, #fff0e3, #fff8e7);
+  background: linear-gradient(135deg, var(--art-gastro-start), var(--art-gastro-end));
 }
 
 .event-art[data-category="Música"],
 .event-art[data-category="Musica"] {
-  background: linear-gradient(135deg, #ffe7ef, #f4eaff);
+  background: linear-gradient(135deg, var(--art-music-start), var(--art-music-end));
 }
 
 .event-art[data-category="Esporte"] {
-  background: linear-gradient(135deg, #e3f8eb, #f5fbe6);
+  background: linear-gradient(135deg, var(--art-sport-start), var(--art-sport-end));
 }
 
 .event-art[data-category="Feira"] {
-  background: linear-gradient(135deg, #fff2d9, #fff9ee);
+  background: linear-gradient(135deg, var(--art-fair-start), var(--art-fair-end));
 }
 
 .events-grid .event-card-content {
@@ -208,7 +218,7 @@
 .event-save-button[aria-pressed="true"] {
   border-color: var(--color-primary);
   color: var(--color-primary);
-  background: #f0efff;
+  background: var(--color-tint);
 }
 
 .events-empty {
@@ -235,7 +245,7 @@
 .events-error {
   padding: 16px;
   border-radius: var(--radius-sm);
-  background: #fff0f0;
+  background: var(--color-danger-soft);
   color: #8d2222;
 }
 

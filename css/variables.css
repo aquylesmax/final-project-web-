@@ -7,10 +7,57 @@
   --color-muted: #73788c;
   --color-border: #e7e9f1;
   --color-success: #16865c;
+  --color-tint: #f0efff;
+  --color-tint-gradient: linear-gradient(135deg, #eeedff, #f7f3ff);
+  --color-hero: linear-gradient(125deg, #f0efff 0%, #f8f7ff 55%, #fff7f0 100%);
+  --color-hero-glow: rgba(99, 91, 255, 0.13);
+  --color-header: rgba(255, 255, 255, 0.94);
+  --color-hover-soft: #f0f1f8;
+  --color-danger-soft: #fff0f0;
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
   --shadow-card: 0 8px 30px rgba(32, 36, 58, 0.06);
   --container-width: 1120px;
   --font-main: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --art-tech-start: #e3f5ff;
+  --art-tech-end: #edf0ff;
+  --art-gastro-start: #fff0e3;
+  --art-gastro-end: #fff8e7;
+  --art-music-start: #ffe7ef;
+  --art-music-end: #f4eaff;
+  --art-sport-start: #e3f8eb;
+  --art-sport-end: #f5fbe6;
+  --art-fair-start: #fff2d9;
+  --art-fair-end: #fff9ee;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary: #8b7bfa;
+  --color-primary-dark: #a79bff;
+  --color-background: #10101f;
+  --color-surface: #1c1c32;
+  --color-text: #f5f4fc;
+  --color-muted: #c5c5d5;
+  --color-border: #35354e;
+  --color-success: #4fc38f;
+  --color-tint: #2b2b4a;
+  --color-tint-gradient: linear-gradient(135deg, #2b2b4a, #25203a);
+  --color-hero: linear-gradient(125deg, #1c1c32 0%, #17172f 55%, #221c2e 100%);
+  --color-hero-glow: rgba(139, 123, 250, 0.22);
+  --color-header: rgba(28, 28, 50, 0.94);
+  --color-hover-soft: #2b2b4a;
+  --color-danger-soft: #3a1f2a;
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --art-tech-start: #14283a;
+  --art-tech-end: #1b1f3d;
+  --art-gastro-start: #3a2614;
+  --art-gastro-end: #3a3014;
+  --art-music-start: #3a1426;
+  --art-music-end: #2a1a40;
+  --art-sport-start: #14301f;
+  --art-sport-end: #24301a;
+  --art-fair-start: #3a2e14;
+  --art-fair-end: #2e2814;
 }

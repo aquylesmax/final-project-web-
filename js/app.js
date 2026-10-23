@@ -22,10 +22,13 @@
 
   function eventCard(event) {
     const saved = window.ConectaStorage?.isSaved(event.id) ?? false;
+    const art = event.images
+      ? `<img src="${escapeHTML(event.images[0])}" alt="" loading="lazy">`
+      : escapeHTML(event.category);
 
     return `
       <article class="event-card">
-        <div class="event-placeholder">${escapeHTML(event.category)}</div>
+        <div class="event-placeholder">${art}</div>
         <div class="event-card-content">
           <span class="event-category">${escapeHTML(event.category)}</span>
           <h3>${escapeHTML(event.title)}</h3>

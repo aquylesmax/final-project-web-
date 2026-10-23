@@ -134,10 +134,13 @@
     const description = escapeHTML(event.description || "Mais informações em breve.");
     const icon = icons[event.category] || "✳";
     const saved = isSaved(event.id);
+    const art = event.images
+      ? `<img src="${escapeHTML(event.images[0])}" alt="" loading="lazy">`
+      : icon;
 
     return `
       <article class="event-card">
-        <div class="event-art" data-category="${category}" aria-hidden="true">${icon}</div>
+        <div class="event-art" data-category="${category}" aria-hidden="true">${art}</div>
         <div class="event-card-content">
           <span class="event-category">${category}</span>
           <p class="event-date">${escapeHTML(formatDate(event.date))}</p>

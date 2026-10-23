@@ -5,7 +5,7 @@
 
 /* ---------- Tons usados só nesta página ---------- */
 main {
-  --perfil-soft: #f0efff;
+  --perfil-soft: var(--color-tint);
   --perfil-field: var(--color-surface, #ffffff);
 }
 
@@ -14,7 +14,7 @@ main {
   position: relative;
   overflow: hidden;
   padding: clamp(64px, 10vw, 112px) 0;
-  background: linear-gradient(125deg, #f0efff 0%, #f8f7ff 55%, #fff7f0 100%);
+  background: var(--color-hero);
 }
 
 .profile-hero-content {
@@ -485,16 +485,10 @@ main {
   }
 }
 
-/* ---------- Tema escuro (somente nesta página) ---------- */
+/* ---------- Ajustes de tema escuro (paleta base em variables.css) ---------- */
 html[data-theme="dark"] main {
-  --color-text: #f5f4fc;
-  --color-muted: #c5c5d5;
-  --color-border: #35354e;
-  --color-surface: #1c1c32;
   --perfil-soft: #2b2b4a;
   --perfil-field: #25253d;
-  background: #10101f;
-  color: var(--color-text);
 }
 
 html[data-theme="dark"] .profile-hero {

@@ -195,7 +195,7 @@
       theme === "dark" ? "Tema escuro ativado." : "Tema claro ativado."
     );
 
-    updateThemeButtons();
+    window.dispatchEvent(new Event("conecta:theme-changed"));
     renderNotifications();
   }
 
@@ -270,6 +270,7 @@
 
   lightButton.addEventListener("click", () => changeTheme("light"));
   darkButton.addEventListener("click", () => changeTheme("dark"));
+  window.addEventListener("conecta:theme-changed", updateThemeButtons);
   readAllButton.addEventListener("click", markAllAsRead);
 
   notificationsList.addEventListener("click", event => {

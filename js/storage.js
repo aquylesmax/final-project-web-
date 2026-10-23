@@ -1,5 +1,6 @@
 (() => {
   const KEY = "conecta-plus-agenda";
+  const THEME_KEY = "conecta-plus-theme";
 
   function readAgenda() {
     try {
@@ -28,5 +29,21 @@
     return updated;
   }
 
-  window.ConectaStorage = { getAgenda, isSaved, toggleAgenda };
+  function getTheme() {
+    try {
+      return localStorage.getItem(THEME_KEY) === "dark" ? "dark" : "light";
+    } catch {
+      return "light";
+    }
+  }
+
+  function setTheme(theme) {
+    try {
+      localStorage.setItem(THEME_KEY, theme === "dark" ? "dark" : "light");
+    } catch {
+      // Storage indisponivel: o tema vale apenas para a pagina atual.
+    }
+  }
+
+  window.ConectaStorage = { getAgenda, isSaved, toggleAgenda, getTheme, setTheme };
 })();
