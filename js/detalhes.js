@@ -1,11 +1,14 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Elementos dos detalhes do evento
+    // Identificar o evento selecionado
     const eventContent = document.getElementById("event-content");
     const params = new URLSearchParams(window.location.search);
     const eventId = params.get("id");
 
-    // Exibir os detalhes do evento
+    let selectedEvent = null;
+
+    if (!eventContent) return;
+
     if (!eventId) {
         eventContent.innerHTML =
             "<p>Nenhum evento foi selecionado.</p>";
@@ -13,33 +16,76 @@ document.addEventListener("DOMContentLoaded", () => {
         eventContent.innerHTML =
             "<p>Os eventos ainda não estão disponíveis.</p>";
     } else {
-        const event = window.events.find(
+        selectedEvent = window.events.find(
             (item) => String(item.id) === eventId
         );
 
-        if (!event) {
+        if (!selectedEvent) {
             eventContent.innerHTML =
                 "<p>Evento não encontrado. Volte para a página de eventos.</p>";
         } else {
             eventContent.innerHTML = `
                 <article class="event-information">
-                    <h1>${event.title}</h1>
-                    <p>${event.description ?? "Descrição não disponível."}</p>
-                    <p><strong>Data:</strong> ${event.date ?? "A definir"}</p>
-                    <p><strong>Local:</strong> ${event.location ?? "A definir"}</p>
+                    <h1>${selectedEvent.title}</h1>
+                    <p>${selectedEvent.description ?? "Descrição não disponível."}</p>
+                    <p><strong>Data:</strong> ${selectedEvent.date ?? "A definir"}</p>
+                    <p><strong>Local:</strong> ${selectedEvent.location ?? "A definir"}</p>
                     <p><strong>Preço:</strong> ${
-                        event.price === 0
+                        selectedEvent.price === 0
                             ? "Gratuito"
-                            : event.price != null
-                                ? `R$ ${event.price}`
+                            : selectedEvent.price != null
+                                ? `R$ ${selectedEvent.price}`
                                 : "A consultar"
                     }</p>
                 </article>
             `;
+
+            // Criar a galeria específica do evento
+            const galleryContainer =
+                document.getElementById("gallery-container");
+
+            if (galleryContainer) {
+                const images = Array.isArray(selectedEvent.images)
+                    ? selectedEvent.images
+                    : [];
+
+                if (images.length === 0) {
+                    galleryContainer.innerHTML =
+                        "<p>Nenhuma imagem disponível para este evento.</p>";
+                } else {
+                    galleryContainer.innerHTML = images
+                        .map((imagePath, index) => {
+                            const safePath = String(imagePath)
+                                .replace(/&/g, "&amp;")
+                                .replace(/"/g, "&quot;")
+                                .replace(/</g, "&lt;")
+                                .replace(/>/g, "&gt;");
+
+                            const altText =
+                                `Imagem ${index + 1} de ${selectedEvent.title}`;
+
+                            return `
+                                <button
+                                    type="button"
+                                    class="gallery-item"
+                                    data-image="${safePath}"
+                                    aria-label="Ampliar imagem ${index + 1} de ${selectedEvent.title}"
+                                >
+                                    <img
+                                        src="${safePath}"
+                                        alt="${altText}"
+                                        loading="lazy"
+                                    >
+                                </button>
+                            `;
+                        })
+                        .join("");
+                }
+            }
         }
     }
 
-    // Elementos da galeria
+    // Elementos da galeria ampliada
     const galleryContainer =
         document.getElementById("gallery-container");
     const galleryModal =
@@ -49,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeGalleryButton =
         document.getElementById("close-gallery");
 
-    // Abrir a imagem ampliada
+    // Abrir imagem ampliada
     if (
         galleryContainer &&
         galleryModal &&
@@ -57,9 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
         closeGalleryButton
     ) {
         galleryContainer.addEventListener("click", (event) => {
-            const button = event.target.closest?.(".gallery-item");
+            const button = event.target.closest(".gallery-item");
 
-            if (!button) return;
+            if (!button || !galleryContainer.contains(button)) return;
 
             const image = button.querySelector("img");
 
@@ -98,20 +144,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    
-   
+
     // Integração com a agenda compartilhada
-    const registerButton = document.getElementById("register-event");
+    const registerButton =
+        document.getElementById("register-event");
     const registrationMessage =
         document.getElementById("registration-message");
 
     if (registerButton && registrationMessage) {
-        const eventId = new URLSearchParams(
-            window.location.search
-        ).get("id");
-
         const storage = window.ConectaStorage;
-        const eventExists = Array.isArray(window.EVENTS) &&
+
+        const eventExists =
+            Array.isArray(window.EVENTS) &&
             window.EVENTS.some(
                 (item) => String(item.id) === eventId
             );
@@ -153,16 +197,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    
     // Compartilhamento do evento
-    const shareButton = document.getElementById("share-event");
-    const shareMessage = document.getElementById("share-message");
+    const shareButton =
+        document.getElementById("share-event");
+    const shareMessage =
+        document.getElementById("share-message");
 
     if (shareButton && shareMessage) {
         shareButton.addEventListener("click", async () => {
             const eventTitle =
-                document.querySelector(".event-information h1")?.textContent
-                || "Evento no Conecta+";
+                selectedEvent?.title ||
+                document.querySelector(".event-information h1")?.textContent ||
+                "Evento no Conecta+";
 
             const shareData = {
                 title: eventTitle,
@@ -175,10 +221,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     await navigator.share(shareData);
                     shareMessage.textContent =
                         "Compartilhamento iniciado!";
-                } else {
+                } else if (navigator.clipboard?.writeText) {
                     await navigator.clipboard.writeText(shareData.url);
                     shareMessage.textContent =
                         "Link do evento copiado!";
+                } else {
+                    shareMessage.textContent =
+                        "Não foi possível copiar o link neste navegador.";
                 }
             } catch (error) {
                 if (error.name !== "AbortError") {
@@ -188,6 +237,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
-
 });
