@@ -5,13 +5,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const eventId = params.get("id");
 
+    const galleryContainer =
+        document.getElementById("gallery-container");
+    const gallerySection =
+        galleryContainer?.closest("section");
+
+    const registerButton =
+        document.getElementById("register-event");
+    const registrationMessage =
+        document.getElementById("registration-message");
+    const shareButton =
+        document.getElementById("share-event");
+    const shareMessage =
+        document.getElementById("share-message");
+
+    const galleryModal =
+        document.getElementById("gallery-modal");
+    const modalImage =
+        document.getElementById("modal-image");
+    const closeGalleryButton =
+        document.getElementById("close-gallery");
+
     let selectedEvent = null;
 
     if (!eventContent) return;
 
+    // Localizar e exibir o evento
     if (!eventId) {
         eventContent.innerHTML =
-            "<p>Nenhum evento foi selecionado.</p>";
+            "<p>Nenhum evento foi selecionado. Volte para a página de eventos.</p>";
     } else if (!Array.isArray(window.events)) {
         eventContent.innerHTML =
             "<p>Os eventos ainda não estão disponíveis.</p>";
@@ -40,10 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </article>
             `;
 
-            // Criar a galeria específica do evento
-            const galleryContainer =
-                document.getElementById("gallery-container");
-
+            // Criar a galeria do evento
             if (galleryContainer) {
                 const images = Array.isArray(selectedEvent.images)
                     ? selectedEvent.images
@@ -85,18 +104,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Elementos da galeria ampliada
-    const galleryContainer =
-        document.getElementById("gallery-container");
-    const galleryModal =
-        document.getElementById("gallery-modal");
-    const modalImage =
-        document.getElementById("modal-image");
-    const closeGalleryButton =
-        document.getElementById("close-gallery");
+    // Ocultar ações e galeria se não houver evento válido
+    if (!selectedEvent) {
+        if (gallerySection) {
+            gallerySection.hidden = true;
+        }
 
-    // Abrir imagem ampliada
+        if (registerButton) registerButton.hidden = true;
+        if (registrationMessage) registrationMessage.hidden = true;
+        if (shareButton) shareButton.hidden = true;
+        if (shareMessage) shareMessage.hidden = true;
+    }
+
+    // Abrir e fechar a galeria ampliada
     if (
+        selectedEvent &&
         galleryContainer &&
         galleryModal &&
         modalImage &&
@@ -118,16 +140,12 @@ document.addEventListener("DOMContentLoaded", () => {
             closeGalleryButton.focus();
         });
 
-        // Fechar a galeria
         function closeGallery() {
             galleryModal.hidden = true;
             modalImage.removeAttribute("src");
         }
 
-        closeGalleryButton.addEventListener(
-            "click",
-            closeGallery
-        );
+        closeGalleryButton.addEventListener("click", closeGallery);
 
         galleryModal.addEventListener("click", (event) => {
             if (event.target === galleryModal) {
@@ -145,13 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Integração com a agenda compartilhada
-    const registerButton =
-        document.getElementById("register-event");
-    const registrationMessage =
-        document.getElementById("registration-message");
-
-    if (registerButton && registrationMessage) {
+    // Integração com a agenda
+    if (registerButton && registrationMessage && selectedEvent) {
         const storage = window.ConectaStorage;
 
         const eventExists =
@@ -160,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 (item) => String(item.id) === eventId
             );
 
-        if (!eventId || !eventExists) {
+        if (!eventExists) {
             registerButton.disabled = true;
             registrationMessage.textContent =
                 "Não foi possível identificar um evento válido.";
@@ -198,21 +211,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Compartilhamento do evento
-    const shareButton =
-        document.getElementById("share-event");
-    const shareMessage =
-        document.getElementById("share-message");
-
-    if (shareButton && shareMessage) {
+    if (shareButton && shareMessage && selectedEvent) {
         shareButton.addEventListener("click", async () => {
-            const eventTitle =
-                selectedEvent?.title ||
-                document.querySelector(".event-information h1")?.textContent ||
-                "Evento no Conecta+";
-
             const shareData = {
-                title: eventTitle,
-                text: `Confira este evento: ${eventTitle}`,
+                title: selectedEvent.title,
+                text: `Confira este evento: ${selectedEvent.title}`,
                 url: window.location.href
             };
 
