@@ -176,28 +176,39 @@
     document.documentElement.dataset.theme = theme;
   }
 
-  function updateThemeButtons() {
-    const isDark = getCurrentTheme() === "dark";
+  
+    function updateThemeButtons(theme = getCurrentTheme()) {
+      const isDark = theme === "dark";
 
-    lightButton.classList.toggle("selected", !isDark);
-    darkButton.classList.toggle("selected", isDark);
-    lightButton.setAttribute("aria-pressed", String(!isDark));
-    darkButton.setAttribute("aria-pressed", String(isDark));
-  }
+      if (lightButton) {
+        lightButton.classList.toggle("selected", !isDark);
+        lightButton.setAttribute("aria-pressed", String(!isDark));
+      }
 
-  function changeTheme(theme) {
-    safeCall("setTheme", null, theme);
-    applyTheme(theme);
+      if (darkButton) {
+        darkButton.classList.toggle("selected", isDark);
+        darkButton.setAttribute("aria-pressed", String(isDark));
+      }
+    }
 
-    safeCall(
-      "addNotification",
-      null,
-      theme === "dark" ? "Tema escuro ativado." : "Tema claro ativado."
-    );
+    function changeTheme(theme) {
+      if (theme !== "light" && theme !== "dark") return;
 
-    updateThemeButtons();
-    renderNotifications();
-  }
+      safeCall("setTheme", null, theme);
+      applyTheme(theme);
+      updateThemeButtons(theme);
+
+      safeCall(
+        "addNotification",
+        null,
+        theme === "dark"
+          ? "Tema escuro ativado."
+          : "Tema claro ativado."
+      );
+
+      renderNotifications();
+    }
+
 
   /* ----------------------------------------
      6. NOTIFICAÇÕES

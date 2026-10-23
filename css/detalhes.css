@@ -331,3 +331,64 @@
 .site-header .logo-plus {
     color: #6254f5;
 }
+
+/* ========================================
+   TEMA GLOBAL — PÁGINA DE DETALHES
+   ======================================== */
+
+.event-details,
+.event-information {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+.event-details h1,
+.event-details h2,
+.event-information h1,
+.event-information h2,
+.event-information > p,
+.event-description {
+    color: var(--color-text);
+}
+
+/* Informações do evento */
+.event-information p {
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+/* Cartão principal no tema escuro */
+html[data-theme="dark"] .event-details,
+html[data-theme="dark"] .event-information {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme="dark"] .event-information p {
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+/* Botões da página de detalhes */
+.event-actions button {
+    background-color: var(--primary-color, #4f46e5);
+    color: #ffffff;
+}
+
+/* Botão de fechar a galeria */
+#close-gallery {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+/* Corrige os títulos da galeria no tema escuro */
+html[data-theme="dark"] .event-gallery h2 {
+    color: var(--color-text);
+}
+
+/* Garante a leitura dos textos da página */
+html[data-theme="dark"] .event-description,
+html[data-theme="dark"] .event-information > p {
+    color: var(--color-text);
+}

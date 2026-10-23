@@ -528,3 +528,86 @@ html[data-theme="dark"] .profile-panel-header {
     transition: none;
   }
 }
+
+/* ========================================
+   CORREÇÕES DO TEMA ESCURO — MEU PERFIL
+   ======================================== */
+
+html[data-theme="dark"] main {
+  color: #f5f4fc;
+}
+
+/* Cartões e painéis */
+html[data-theme="dark"] .profile-card,
+html[data-theme="dark"] .profile-section {
+  background-color: #1c1c32;
+  color: #f5f4fc;
+  border-color: #35354e;
+}
+
+/* Campos do formulário */
+html[data-theme="dark"] .form-group input {
+  background-color: #25253d;
+  color: #f5f4fc;
+  border-color: #555570;
+}
+
+html[data-theme="dark"] .form-group input::placeholder {
+  color: #bdbdd0;
+}
+
+/* Opções de interesses */
+html[data-theme="dark"] .interest-option span {
+  background-color: #25253d;
+  color: #f5f4fc;
+  border-color: #555570;
+}
+
+html[data-theme="dark"] .interest-option input:checked + span {
+  background-color: #38315f;
+  color: #c4baff;
+  border-color: #a79bff;
+}
+
+/* Botões de tema */
+html[data-theme="dark"] .theme-option {
+  background-color: #25253d;
+  color: #f5f4fc;
+  border-color: #555570;
+}
+
+html[data-theme="dark"] .theme-option span:last-child {
+  color: #c5c5d5;
+}
+
+html[data-theme="dark"] .theme-option.selected {
+  background-color: #38315f;
+  color: #ffffff;
+  border-color: #a79bff;
+}
+
+/* Botões claros do projeto */
+html[data-theme="dark"] main .button:not(.button-primary) {
+  background-color: #25253d;
+  color: #f5f4fc;
+  border-color: #555570;
+}
+
+/* Botão principal */
+html[data-theme="dark"] main .button-primary {
+  color: #ffffff;
+}
+
+/* Notificações */
+html[data-theme="dark"] .notification-item {
+  background-color: #2b2b4a;
+  color: #f5f4fc;
+}
+
+html[data-theme="dark"] .notification-item.read {
+  background-color: transparent;
+}
+
+html[data-theme="dark"] .notification-read {
+  color: #c4baff;
+}

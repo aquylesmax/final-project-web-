@@ -1,9 +1,11 @@
+
 (() => {
-  const KEY = "conecta-plus-agenda";
+  const AGENDA_KEY = "conecta-plus-agenda";
+  const THEME_KEY = "conecta-plus-theme";
 
   function readAgenda() {
     try {
-      const value = JSON.parse(localStorage.getItem(KEY) || "[]");
+      const value = JSON.parse(localStorage.getItem(AGENDA_KEY) || "[]");
       return Array.isArray(value) ? value : [];
     } catch {
       return [];
@@ -24,9 +26,26 @@
       ? agenda.filter(item => item !== id)
       : [...agenda, id];
 
-    localStorage.setItem(KEY, JSON.stringify(updated));
+    localStorage.setItem(AGENDA_KEY, JSON.stringify(updated));
     return updated;
   }
 
-  window.ConectaStorage = { getAgenda, isSaved, toggleAgenda };
+  function getTheme() {
+    const theme = localStorage.getItem(THEME_KEY);
+    return theme === "dark" ? "dark" : "light";
+  }
+
+  function setTheme(theme) {
+    const validTheme = theme === "dark" ? "dark" : "light";
+    localStorage.setItem(THEME_KEY, validTheme);
+    return validTheme;
+  }
+
+  window.ConectaStorage = {
+    getAgenda,
+    isSaved,
+    toggleAgenda,
+    getTheme,
+    setTheme
+  };
 })();

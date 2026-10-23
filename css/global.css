@@ -71,3 +71,57 @@ img {
 [hidden] {
   display: none !important;
 }
+
+/* Logo do cabeçalho no tema escuro */
+:root[data-theme="dark"] .logo,
+:root[data-theme="dark"] .logo a,
+:root[data-theme="dark"] .logo span,
+:root[data-theme="dark"] .logo strong,
+:root[data-theme="dark"] .site-logo,
+:root[data-theme="dark"] .site-logo a {
+  color: var(--color-text);
+}
+
+/* Logo do Conecta+ no tema escuro */
+html[data-theme="dark"] .site-header .brand {
+  color: #f5f4fc;
+}
+
+html[data-theme="dark"] .site-header .brand span {
+  color: #a79bff;
+}
+html[data-theme="dark"] .site-header {
+  background-color: #12131a;
+  border-color: #353747;
+}
+
+/* Botões no tema escuro */
+html[data-theme="dark"] button {
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+/* Botões secundários e neutros */
+html[data-theme="dark"] .btn,
+html[data-theme="dark"] .button,
+html[data-theme="dark"] .btn-secondary,
+html[data-theme="dark"] .btn-outline {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+/* Campos de formulário */
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+/* Texto digitado e opções */
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: var(--color-muted);
+}

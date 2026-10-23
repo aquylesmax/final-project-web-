@@ -4,11 +4,31 @@
 ======================================== */
 
 /* ---------- Destaque (mesmo padrão de eventos.css) ---------- */
+
 .agenda-hero {
   position: relative;
   overflow: hidden;
   padding: clamp(64px, 10vw, 112px) 0;
-  background: linear-gradient(125deg, #f0efff 0%, #f8f7ff 55%, #fff7f0 100%);
+  background: linear-gradient(
+    125deg,
+    var(--color-background) 0%,
+    var(--color-surface) 55%,
+    var(--color-background) 100%
+  );
+}
+
+/* Destaque adaptado ao tema global */
+.agenda-hero h1 {
+  color: var(--color-text);
+}
+
+.agenda-hero-content > p {
+  color: var(--color-muted);
+}
+
+/* Remove o elemento decorativo */
+.agenda-hero-decoration {
+  display: none;
 }
 
 .agenda-hero-content {
@@ -587,4 +607,38 @@
 
 .agenda-card-footer .agenda-danger:hover {
   background: #fff0f0;
+}
+
+
+/* ========================================
+   AJUSTES DO TEMA ESCURO — MINHA AGENDA
+   ======================================== */
+
+html[data-theme="dark"] .agenda-summary-icon,
+html[data-theme="dark"] .agenda-tab-count {
+  background: var(--color-background);
+  color: var(--color-primary);
+}
+
+html[data-theme="dark"] .agenda-badge {
+  background: var(--color-background);
+  color: var(--color-muted);
+}
+
+html[data-theme="dark"] .calendar-day:hover {
+  background: var(--color-surface);
+}
+
+html[data-theme="dark"] .agenda-save-button[aria-pressed="true"] {
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+html[data-theme="dark"] .agenda-card-footer .agenda-fav-button[aria-pressed="true"] {
+  background: #402333;
+  color: #ff8bb5;
+}
+
+html[data-theme="dark"] .agenda-card-footer .agenda-danger:hover {
+  background: #3b2228;
 }

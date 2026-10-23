@@ -2,7 +2,26 @@
   position: relative;
   overflow: hidden;
   padding: clamp(64px, 10vw, 112px) 0;
-  background: linear-gradient(125deg, #f0efff 0%, #f8f7ff 55%, #fff7f0 100%);
+  background: linear-gradient(
+    125deg,
+    var(--color-background) 0%,
+    var(--color-surface) 55%,
+    var(--color-background) 100%
+  );
+}
+
+/* Ajustes do destaque conforme o tema */
+.events-hero h1 {
+  color: var(--color-text);
+}
+
+.events-hero-content > p {
+  color: var(--color-muted);
+}
+
+/* Remover a decoração adicionada anteriormente */
+.events-hero-decoration {
+  display: none;
 }
 
 .events-hero-content {
@@ -307,3 +326,31 @@
 }
 
 /* Ajustes de responsividade da página de eventos. */
+
+
+
+/* Cartões e textos adaptados ao tema global */
+.events-grid .event-card {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.events-grid .event-card h3,
+.events-grid .event-card p,
+.events-results-bar p,
+.events-empty h3 {
+  color: var(--color-text);
+}
+
+.events-grid .event-card .event-meta,
+.events-location,
+.event-date {
+  color: var(--color-muted);
+}
+
+/* Botão de salvar evento selecionado */
+.event-save-button[aria-pressed="true"] {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+}
