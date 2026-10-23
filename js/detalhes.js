@@ -49,6 +49,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeGalleryButton =
         document.getElementById("close-gallery");
 
+    // Galeria com as imagens do evento, quando existirem
+    const galleryEvent = Array.isArray(window.events)
+        ? window.events.find((item) => String(item.id) === eventId)
+        : null;
+
+    if (galleryContainer && galleryEvent?.images) {
+        galleryContainer.replaceChildren(...galleryEvent.images.map((src, index) => {
+            const button = document.createElement("button");
+            button.className = "gallery-item";
+            button.type = "button";
+            button.dataset.image = src;
+            button.setAttribute("aria-label", `Ampliar imagem ${index + 1}`);
+
+            const image = document.createElement("img");
+            image.src = src;
+            image.alt = `${galleryEvent.title}: ${galleryEvent.imageAlts?.[index] ?? "Imagem do evento"}`;
+            image.loading = "lazy";
+
+            button.appendChild(image);
+            return button;
+        }));
+    }
+
     // Abrir a imagem ampliada
     if (
         galleryContainer &&

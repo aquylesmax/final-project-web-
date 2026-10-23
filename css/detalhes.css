@@ -283,6 +283,9 @@
 }
 
 .site-header .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     color: #25243a;
     font-size: 1.35rem;
     font-weight: 800;
