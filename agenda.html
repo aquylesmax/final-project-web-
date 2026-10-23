@@ -124,15 +124,23 @@
         </button>
       </div>
 
+      
       <div class="agenda-tab-panel" id="panel-registered" role="tabpanel" aria-labelledby="tab-registered">
-        <div class="agenda-grid" id="registered-events" aria-live="polite"></div>
-        <div class="agenda-empty" id="registered-empty" hidden>
-          <span class="agenda-empty-icon" aria-hidden="true">📅</span>
-          <h3>Você não está inscrito em nenhum evento</h3>
-          <p>Explore os eventos e inscreva-se nos que você quer viver.</p>
-          <a class="button" href="eventos.html">Explorar eventos</a>
-        </div>
+          <div class="agenda-grid" id="registered-events" aria-live="polite"></div>
+
+          <div class="agenda-empty" id="registered-empty" hidden>
+              <img
+                  src="assets/agenda-vazia.png"
+                  alt="Ilustração de um calendário com opções de eventos"
+                  class="agenda-empty-image"
+              >
+
+              <h3>Você não está inscrito em nenhum evento</h3>
+              <p>Explore os eventos e inscreva-se nos que você quer viver.</p>
+              <a class="button" href="eventos.html">Explorar eventos</a>
+          </div>
       </div>
+
 
       <div class="agenda-tab-panel" id="panel-favorites" role="tabpanel" aria-labelledby="tab-favorites" hidden>
         <div class="agenda-grid" id="favorite-events" aria-live="polite"></div>
